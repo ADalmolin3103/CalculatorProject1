@@ -1,12 +1,13 @@
-/*TODO coisas para fazer para completar a classe (EM ORDEM-ish)
-    * OBS: pqp esqueci de definir que os atributos são privados. To codando @1:17am. Da um desconto ;w;
+/*TODO:
+ * Testar remoção de nodos..
+ * 
  */
 
 package Classes;
 
-import Interfaces.LLInterface;
+import Interfaces.CLInterface;
 
-public class ChainedList<T> implements LLInterface<T> {
+public class ChainedList<T> implements CLInterface<T> {
 
     // Atributos de classe e construtor
     private Node<T> first, last;
@@ -101,7 +102,8 @@ public class ChainedList<T> implements LLInterface<T> {
                 N = N.getNext();
         }
 
-        //Se chegar aqui significa que: 1)  A lista não está vazia e o valor não foi achado. Return -1;
+        // Se chegar aqui significa que: 1) A lista não está vazia e o valor não foi
+        // achado. Return -1;
         return -1;
     }
 
@@ -112,7 +114,8 @@ public class ChainedList<T> implements LLInterface<T> {
     }
 
     @Override
-    public String showEntries() { // Necessário para dar a resposta ou o que está faltando? Talvez precise mudar para tirar a notação de Node[i]=info
+    public String showEntries() { // Necessário para dar a resposta ou o que está faltando? Talvez precise mudar
+                                  // para tirar a notação de Node[i]=info
         String entries = "";
         Node<T> N;
         if (this.isEmpty()) {
@@ -120,8 +123,8 @@ public class ChainedList<T> implements LLInterface<T> {
         } else {
             N = this.getFirst();
         }
-        for(int i = 0; i < this.getSize(); i++){
-            entries += "Node["+i+"] = " + N.getInfo() + "\r\n";
+        for (int i = 0; i < this.getSize(); i++) {
+            entries += "Node[" + i + "] = " + N.getInfo() + "\r\n";
             N = N.getNext();
         }
         return entries;
@@ -145,6 +148,27 @@ public class ChainedList<T> implements LLInterface<T> {
             n = n.getNext();
         }
         return n;
+    }
+
+    @Override
+    public void removeNodePosition(int position) {
+        Node<T> n;
+        n = selectNode(position - 1); // Remove o próximo nodo no penúltimo, fazendo ele ser o último
+        n.setNext(null);
+        this.setLast(n); //Define o último como o último antes da posição fornecida
+    }
+
+    @Override
+    public void removeNodeValue(T value) {
+        Node<T> n;
+        if(this.isEmpty()){
+            throw new RuntimeException("Chained list is empty");
+        } else n = this.getFirst();
+        for(int i = 0; i < this.getSize(); i++){
+            if(n.getInfo() == value){
+                this.removeNodePosition(i);
+            } else n = n.getNext();
+        }
     }
 
 }

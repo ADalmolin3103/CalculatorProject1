@@ -2,7 +2,7 @@ package Interfaces;
 import Classes.Node; //Permite a criação de um método de retorno de um Nodo genérico
 
 
-public interface LLInterface<T> {
+public interface CLInterface<T> {
     public void insertNext(T data);
     public void insertNext(T data, int place);
     public T getData(int place);
@@ -12,4 +12,7 @@ public interface LLInterface<T> {
     public String showEntries();    
     public boolean isEmpty();
     public Node<T> selectNode(int nodeNumber);
+    public void removeNodePosition(int position);
+    public void removeNodeValue (T value);
+    
 }
