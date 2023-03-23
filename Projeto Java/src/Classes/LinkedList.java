@@ -1,38 +1,54 @@
+/*TODO coisas para fazer para completar a classe (EM ORDEM-ish)
+ * Testar o seletor de Nodo para implementação.
+ * Fazer o construtor
+ * Finalizar métodos de interface
+ * 
+ * OBS: pqp esqueci de definir que os atributos são privados. To codando @1:17am. Da um desconto ;w;
+ */
+
 package Classes;
 
 import Interfaces.LLInterface;
 
 public class LinkedList<T> implements LLInterface<T> {
 
-    // Construtor && atributos de classe
+    // Atributos de classe e construtor
+    private Node<T> first, last;
+    private int size = 0;
+
     public LinkedList() {
-
+        //Do electric boogaloo muahahah
     }
-
-    T primeiro, ultimo;
 
     // Getters && Setters
-    public T getPrimeiro() {
-        return primeiro;
+    @Override
+    public Node<T> getFirst() {
+        return this.first;
     }
 
-    public void setPrimeiro(T primeiro) {
-        this.primeiro = primeiro;
+    public void setFirst(Node<T> first) {
+        this.first = first;
     }
 
-    public T getUltimo() {
-        return ultimo;
+    public Node<T> getLast() {
+        return last;
     }
 
-    public void setUltimo(T ultimo) {
-        this.ultimo = ultimo;
+    public void setLast(Node<T> lastNode) { // Para criar um Nodo e inserir como último: setLast(new Node<T>(T info)) =)
+        this.last = lastNode;
     }
 
     // Interface methods
     @Override
     public void insertNext(T data) {
-        if(isEmpty()){
-            
+        Node<T> n = new Node<>(data);
+        if (isEmpty()) {
+            this.setFirst(n);
+            size++;
+        } else {
+            this.last.setNext(n);
+            this.setLast(n);
+            size++;
         }
     }
 
@@ -56,14 +72,8 @@ public class LinkedList<T> implements LLInterface<T> {
 
     @Override
     public void clearList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clearList'");
-    }
-
-    @Override
-    public T getFirst() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFirst'");
+        this.setFirst(null);
+        this.setLast(null);
     }
 
     @Override
@@ -74,11 +84,22 @@ public class LinkedList<T> implements LLInterface<T> {
 
     @Override
     public boolean isEmpty() {
-        if (this.primeiro == null) {
+        if (this.first == null) {
             return true;
         } else {
             return false;
         }
+    }
+
+    @Override
+    public Node<T> selectNode(int nodeNumber) {
+        Node<T> n = first;
+        // Não precisa de um if para ver se o nodeNumber é o primeiro, pois se for, ele
+        // nem itera e avança. Só pula por cima ;)
+        for (int i = 0; i < nodeNumber; i++) {
+            n = n.getNext();
+        }
+        return n;
     }
 
 }
