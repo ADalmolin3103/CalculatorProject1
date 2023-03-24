@@ -1,21 +1,52 @@
 import Classes.*;
 
+/*TODO: Testar todas as funcionalidades da lisata encadeada */
+
 public class Test {
     public static void main(String[] args) {
-        ChainedList<Integer> L1 = new ChainedList<>();
-        L1.insertNext(1);
-        L1.insertNext(2);
-        L1.insertNext(2);
-        L1.insertNext(2);
-        L1.insertNext(3);
-        L1.insertNext(2);
+        /*
+         * Testado:
+         * OK! isEmpty
+         * OK! InsertNext(sem pos)
+         * OK! InsertNext(Com pos)
+         * OK! Select Node
+         * 
+         */
+        // Criação dos objetos
+        ChainedList<Double> cl = new ChainedList<>(); // Chained list para teste;
+        Node<Double> n;
 
-        Node<Integer> node = L1.selectNode(4);
-        System.out.println(node.getInfo());
-        L1.insertNext(4, 0);
-        System.out.println(L1.getFirst().getInfo());
-        L1.insertNext(5, L1.getSize()); //Inserir no ultimo
-        System.out.println(L1.getLast().getInfo());
-        
+        // Inserção de dados
+        cl.insertNext(1.0);
+        cl.insertNext(2.0);
+        cl.insertNext(3.0);
+        cl.insertNext(4.0);
+        cl.insertNext(5.0);
+        cl.insertNext(3.5, 3);
+
+        System.out.println(cl.showEntries());
+        System.out.println("-=-=-=-=-=-=-=-=-=-=-=-= Removendo cl[0] -=-=-=-=-=-=-=-=-=-=-=-=");
+
+        cl.removeNodePosition(0);
+        System.out.println(cl.showEntries());
+        System.out.println("-=-=-=-=-=-=-=-=-=-=-=-= Removendo cl[3.5] -=-=-=-=-=-=-=-=-=-=-=-=");
+        cl.removeNodeValue(3.5);
+        System.out.println(cl.showEntries());
+
+    }
+
+    // Imprime valores da lista para teste
+    public static void printCLVals(ChainedList<Double> cl) {
+        Node<Double> n;
+        if (cl.isEmpty()) {
+            throw new RuntimeException("A lista está vazia");
+        } else {
+            n = cl.getFirst();
+        }
+
+        for (int i = 0; i < cl.getSize(); i++) {
+            System.out.println(i + ", " + n.getInfo());
+            n = n.getNext();
+        }
     }
 }

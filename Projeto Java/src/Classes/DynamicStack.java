@@ -1,27 +1,55 @@
+/*TODO set stack overflows
+ * 
+ */
+//Atenção: Tamanho != limite
 package Classes;
 import Interfaces.*;
 public class DynamicStack implements DynamicStackInterface {
 
     //Attributes && Constructor
     private ChainedList<Double> dataList ;
-    
-    public DynamicStack(){
+    private int size = 0, limit;
+
+    public DynamicStack(int limit){
+        this.setLimit(limit);
         dataList = new ChainedList<>();
+    }
+
+    public int getSize(){
+        return this.size;
+    }
+
+    public void setSize(int s){
+        this.size = s;
+    }
+
+    public int getLimit(){
+        return this.limit;
+    }
+
+    public void setLimit(int limit){
+        this.limit = limit;
     }
 
     @Override
     public void push(double info) {
-        dataList.insertNext(info);
+        if(this.getSize() == this.getLimit()){
+            throw new RuntimeException("Stack overflow");
+        } else {
+            dataList.insertNext(info);
+            size++;
+        }
     }
 
     @Override
-    public double pop() {
+    public double pop() { //A idéia é pegar a info de n e desvincular o ultimo (tirando a ponte do penúltimo pra ele, e alterando o atribto que aponta para ele)
         Node<Double> n;
         double info;
         n = dataList.getLast();
         info = n.getInfo();
-        dataList.
-
+        dataList.removeNodePosition(dataList.getSize()); //O tamanho aponta para o último
+        size--;
+        return info;
     }
 
     @Override

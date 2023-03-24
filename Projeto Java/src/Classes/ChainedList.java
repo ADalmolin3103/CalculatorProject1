@@ -1,5 +1,4 @@
 /*TODO:
- * Testar remoção de nodos..
  * 
  */
 
@@ -15,70 +14,70 @@ public class ChainedList<T> implements CLInterface<T> {
 
     // Getters && Setters
     @Override
-    public Node<T> getFirst() {
+    public Node<T> getFirst() { // OK
         return this.first;
     }
 
-    public void setFirst(Node<T> first) {
+    public void setFirst(Node<T> first) { // OK
         this.first = first;
     }
 
-    public Node<T> getLast() {
+    public Node<T> getLast() { // OK
         return last;
     }
 
-    public void setLast(Node<T> lastNode) { // Para criar um Nodo e inserir como último: setLast(new Node<T>(T info)) =)
+    public void setLast(Node<T> lastNode) { // OK
         this.last = lastNode;
     }
 
-    public int getSize() {
+    public int getSize() { // OK
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(int size) { // OK. Useless
         this.size = size;
     }
 
     // Interface methods
     @Override
-    public void insertNext(T data) {
+    public void insertNext(T data) { // OK
         Node<T> n = new Node<>(data);
         if (isEmpty()) {
             this.setFirst(n);
             this.setLast(n);
             size++;
         } else {
-            this.last.setNext(n);
+            this.getLast().setNext(n);
             this.setLast(n);
+
             size++;
         }
     }
 
     @Override
-    public void insertNext(T data, int place) {
+    public void insertNext(T data, int place) { // OK. OBS se der isertNext(3) vai inserir depois do 3, ou seja, na
+                                                // posição 4
         Node<T> N = new Node<T>(data);
         if (place <= this.getSize()) {
             if (place == 0) {
                 N.setNext(first);
-                this.first = N;
+                this.setFirst(N);
                 size++;
             } else if (place == size) {
-                this.last = N;
                 this.setLast(N);
                 size++;
             } else {
+                N.setNext(this.selectNode(place + 1));
                 selectNode(place).setNext(N);
                 size++;
             }
-        }
-
-        else
+        } else
             throw new RuntimeException();
 
     }
 
     @Override
-    public T getData(int place) {
+    public T getData(int place) { // OK
         if (place <= this.getSize() - 1) {
             return this.selectNode(place).getInfo();
         } else
@@ -87,19 +86,19 @@ public class ChainedList<T> implements CLInterface<T> {
     }
 
     @Override
-    public int getPlace(T data) {
+    public int getPlace(T data) { // OK
         Node<T> N;
         if (this.isEmpty()) {
             throw new RuntimeException("A lista está vazia");
         } else {
             N = this.getFirst();
         }
-
         for (int i = 0; i < this.getSize(); i++) {
-            if (N.getInfo() == data)
+            if (N.getInfo().equals(data)) {
                 return i;
-            else
+            } else {
                 N = N.getNext();
+            }
         }
 
         // Se chegar aqui significa que: 1) A lista não está vazia e o valor não foi
@@ -108,14 +107,13 @@ public class ChainedList<T> implements CLInterface<T> {
     }
 
     @Override
-    public void clearList() {
+    public void clearList() { // OK
         this.setFirst(null);
         this.setLast(null);
     }
 
     @Override
-    public String showEntries() { // Necessário para dar a resposta ou o que está faltando? Talvez precise mudar
-                                  // para tirar a notação de Node[i]=info
+    public String showEntries() { // OK (SEXY)
         String entries = "";
         Node<T> N;
         if (this.isEmpty()) {
@@ -131,7 +129,7 @@ public class ChainedList<T> implements CLInterface<T> {
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty() { // OK
         if (this.first == null) {
             return true;
         } else {
@@ -140,35 +138,58 @@ public class ChainedList<T> implements CLInterface<T> {
     }
 
     @Override
-    public Node<T> selectNode(int nodeNumber) {
-        Node<T> n = first;
-        // Não precisa de um if para ver se o nodeNumber é o primeiro, pois se for, ele
-        // nem itera e avança. Só pula por cima ;)
-        for (int i = 0; i < nodeNumber; i++) {
-            n = n.getNext();
+    public Node<T> selectNode(int nodeNumber) { // OK
+        Node<T> n;
+
+        if (this.isEmpty()) {
+            throw new RuntimeException();
+        } else {
+            n = this.getFirst();
         }
-        return n;
+
+        if (nodeNumber > this.getSize() || nodeNumber < 0) {
+            throw new RuntimeException("O número a ser buscado não é válido");
+        } else {
+            for (int i = 0; i < nodeNumber; i++) {
+                n = n.getNext(); // Será executado nodeNumber -1 vezes;
+            }
+            return n;
+        }
     }
 
     @Override
-    public void removeNodePosition(int position) {
-        Node<T> n;
-        n = selectNode(position - 1); // Remove o próximo nodo no penúltimo, fazendo ele ser o último
-        n.setNext(null);
-        this.setLast(n); //Define o último como o último antes da posição fornecida
+    public void removeNodePosition(int position) {// OK
+        Node<T> nRemoving, nPrevious;
+        if (this.isEmpty()) {
+            throw new RuntimeException("List is empty");
+        } else {
+            if (position == 0) {
+                nRemoving = this.getFirst().getNext();
+                this.setFirst(nRemoving);
+                size--;
+            } else if (position == this.getSize()) {
+                nRemoving = selectNode(position - 1);
+                this.setLast(nRemoving);
+                nRemoving.setNext(null);
+                size--;
+            } else {
+                // nPrevious
+                nPrevious = this.selectNode(position - 1);
+                nRemoving = nPrevious.getNext(); // N vou iterar 2x do 0 T-T
+                nPrevious.setNext(nRemoving.getNext()); // Nada aponta para nRemoving...
+                nRemoving.setNext(null); // ... e ele n aponta para lugar nenhum
+                size--;
+            }
+        }
+
     }
 
     @Override
-    public void removeNodeValue(T value) {
-        Node<T> n;
-        if(this.isEmpty()){
+    public void removeNodeValue(T value) {// OK
+        if (this.isEmpty()) {
             throw new RuntimeException("Chained list is empty");
-        } else n = this.getFirst();
-        for(int i = 0; i < this.getSize(); i++){
-            if(n.getInfo() == value){
-                this.removeNodePosition(i);
-            } else n = n.getNext();
+        } else {
+            removeNodePosition(getPlace(value)); //Tira o nodo na posição retornada com o value
         }
     }
-
 }
