@@ -1,8 +1,5 @@
-/*TODO:
- * 
- */
-
 package Classes;
+
 
 import Interfaces.CLInterface;
 
@@ -117,13 +114,18 @@ public class ChainedList<T> implements CLInterface<T> {
         String entries = "";
         Node<T> N;
         if (this.isEmpty()) {
-            throw new RuntimeException("A lista está vazia");
+            return "A lista está vazia";
         } else {
             N = this.getFirst();
         }
+
         for (int i = 0; i < this.getSize(); i++) {
-            entries += "Node[" + i + "] = " + N.getInfo() + "\r\n";
-            N = N.getNext();
+
+            entries += "Node[" + i + "] = " + N.getInfo();
+            if (N.getNext() != null) {
+                entries += "\r\n";
+                N = N.getNext();
+            }
         }
         return entries;
     }
@@ -142,7 +144,7 @@ public class ChainedList<T> implements CLInterface<T> {
         Node<T> n;
 
         if (this.isEmpty()) {
-            throw new RuntimeException();
+            throw new RuntimeException("Is empty");
         } else {
             n = this.getFirst();
         }
@@ -159,29 +161,39 @@ public class ChainedList<T> implements CLInterface<T> {
 
     @Override
     public void removeNodePosition(int position) {// OK
-        Node<T> nRemoving, nPrevious;
+        Node<T> nRemoving, nAlt;
         if (this.isEmpty()) {
             throw new RuntimeException("List is empty");
+        } else if (position >= this.size) {
+            // Ou seja, considere-se a lista:
+            /*
+             * L[0] = x && L.lenght = 1
+             * se quiser chamar a posição 1 (não existe), lançar excessão
+             * repare que normalmente a gente pega a posição -1, que é a posição lógica
+             * ué? Ver pq a gente usa a posição logica pra verificar isso, mas a real para
+             * outros casos de if?
+             */
+            throw new RuntimeException("O índice não existe");
         } else {
-            if (position == 0) {
-                nRemoving = this.getFirst().getNext();
-                this.setFirst(nRemoving);
-                size--;
-            } else if (position == this.getSize()) {
-                nRemoving = selectNode(position - 1);
-                this.setLast(nRemoving);
+            if (position == 0 && this.getSize() == 1) {
+                this.clearList();
+            } else if (position == 0) { // OK
+                nRemoving = this.selectNode(0);
+                nAlt = nRemoving.getNext();
+                this.setFirst(nAlt);
                 nRemoving.setNext(null);
-                size--;
-            } else {
-                // nPrevious
-                nPrevious = this.selectNode(position - 1);
-                nRemoving = nPrevious.getNext(); // N vou iterar 2x do 0 T-T
-                nPrevious.setNext(nRemoving.getNext()); // Nada aponta para nRemoving...
-                nRemoving.setNext(null); // ... e ele n aponta para lugar nenhum
-                size--;
+            } else if (position == this.size - 1) { // OK //Conversão de tamanho real para lógico
+                nAlt = this.selectNode(position - 1);
+                this.setLast(nAlt);
+                nAlt.setNext(null);
+            } else { //OK
+                nAlt = selectNode(position - 1);
+                nRemoving = nAlt.getNext();
+                nAlt.setNext(nRemoving.getNext());
+                nRemoving.setNext(null);
             }
+            size--;
         }
-
     }
 
     @Override
@@ -189,7 +201,7 @@ public class ChainedList<T> implements CLInterface<T> {
         if (this.isEmpty()) {
             throw new RuntimeException("Chained list is empty");
         } else {
-            removeNodePosition(getPlace(value)); //Tira o nodo na posição retornada com o value
+            removeNodePosition(getPlace(value)); // Tira o nodo na posição retornada com o value
         }
     }
 }
