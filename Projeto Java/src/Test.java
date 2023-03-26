@@ -1,5 +1,4 @@
 
-//TODO: Implantar tudo para cálculo em stack, nas 2. Depois, colocar na GUI.
 //Ideia: será que dá pra gerar uma classe de cálculo que é genérica para o tipo de stack? A final elas usam os mesmos métodos.
 //Vou tirar uma interface e deixar uam interface padrão "StackInterface<T>" onde para T  é passado uma classe de array ou linked list? The fuck?
 //Pensar bastante, e tomar café. 
