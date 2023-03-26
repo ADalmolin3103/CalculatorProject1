@@ -1,6 +1,6 @@
 package Interfaces;
+public interface StackInterface  {
 
-public interface DynamicStackInterface  {
     public void push(double info);
     public double pop();
     public double peek();

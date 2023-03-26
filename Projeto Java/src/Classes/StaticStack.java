@@ -2,9 +2,7 @@ package Classes;
 
 import Interfaces.*;
 
-//TODO testar as coisas
-
-public class StaticStack implements StaticStackInterface<Double> {
+public class StaticStack implements StackInterface{
 
     // Atributo
     double[] info;

@@ -3,7 +3,7 @@ package Classes;
 
 import Interfaces.*;
 
-public class DynamicStack implements DynamicStackInterface {
+public class DynamicStack implements StackInterface {
 
     // Attributes && Constructor
     private ChainedList<Double> dataList;
