@@ -1,9 +1,7 @@
 //Atenção: Tamanho != limite
 package Classes;
 
-import Interfaces.*;
-
-public class DynamicStack implements StackInterface {
+public class DynamicStack extends Stack {
 
     // Attributes && Constructor
     private ChainedList<Double> dataList;
@@ -41,7 +39,7 @@ public class DynamicStack implements StackInterface {
     @Override
     public void push(double info) { // OK
         if (this.getSize() == this.getLimit()) {
-            throw new RuntimeException("Stack overflow");
+            throw new RuntimeException("\u001b[1;31m Stack overflow \u001b[0m");
         } else {
             dataList.insertNext(info);
             size++;
@@ -49,7 +47,10 @@ public class DynamicStack implements StackInterface {
     }
 
     @Override
-    public double pop() { // ok //A idéia é pegar a info de n e desvincular o ultimo (tirando a ponte do // penúltimo pra ele, e alterando o atribto que aponta para ele)
+    public double pop() { // ok //A idéia é pegar a info de n e desvincular o ultimo (tirando a ponte do penúltimo pra ele, e alterando o atribto que aponta para ele)
+        if(this.getSize()==0){
+            throw new RuntimeException("\u001b[1;31m Diese Stack ist leer ;-; \u001b[0m");
+        }
         Node<Double> n = null;
         double info;
         n = dataList.getLast();
@@ -62,7 +63,7 @@ public class DynamicStack implements StackInterface {
     @Override
     public double peek() {
         if (this.getDataList().isEmpty()) {
-            throw new RuntimeException("A lista esta vazia");
+            throw new RuntimeException("\u001b[1;31m A lista esta vazia \u001b[0m");
         } else {
             return this.dataList.getLast().getInfo();
         }
@@ -70,9 +71,10 @@ public class DynamicStack implements StackInterface {
 
     @Override
     public boolean isEmpty() {
-        if(this.getSize() == 0){
+        if (this.getSize() == 0) {
             return true;
-        } else return false;
+        } else
+            return false;
     }
 
     @Override

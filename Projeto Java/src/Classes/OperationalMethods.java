@@ -28,7 +28,7 @@ public class OperationalMethods implements OperationalMethodsInterface {
         // REGEX herói da partida o/
         if (snippet.isEmpty()) {
             return false;
-        } else if(snippet.matches("[+ | - | / | * | 0-9]*")) {
+        } else if(snippet.matches("[- | + | / | * | 0-9 | \\.]*")) {
             return true;
         } else {
             return false;

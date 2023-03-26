@@ -1,8 +1,6 @@
 package Classes;
 
-import Interfaces.*;
-
-public class StaticStack implements StackInterface{
+public class StaticStack extends Stack{
 
     // Atributo
     double[] info;
@@ -42,7 +40,7 @@ public class StaticStack implements StackInterface{
     @Override
     public void push(double data) {
         if (this.size == this.limit) {
-            throw new RuntimeException("Stack overflow UwU");
+            throw new RuntimeException("\u001b[1;31m  Stack overflow UwU \u001b[0m");
         } else {
             info[size] = data;
             size++;
@@ -52,7 +50,7 @@ public class StaticStack implements StackInterface{
     @Override
     public double pop() {
         if (size == 0) {
-            throw new RuntimeException("Stack underflow");
+            throw new RuntimeException("\u001b[1;31m  Stack underflow UwU \u001b[0m");
         } else {
             double data;
             data = this.info[this.size-1];
@@ -64,7 +62,7 @@ public class StaticStack implements StackInterface{
     @Override
     public double peek() {
         if (size == 0) {
-            throw new RuntimeException("Stack underflow");
+            throw new RuntimeException("\u001b[1;31m  Stack underflow UwU \u001b[0m");
         } else {
             return info[size-1];
         }
