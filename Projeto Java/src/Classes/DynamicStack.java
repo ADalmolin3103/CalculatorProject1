@@ -49,8 +49,7 @@ public class DynamicStack implements DynamicStackInterface {
     }
 
     @Override
-    public double pop() { // ok //A idéia é pegar a info de n e desvincular o ultimo (tirando a ponte do
-                          // penúltimo pra ele, e alterando o atribto que aponta para ele)
+    public double pop() { // ok //A idéia é pegar a info de n e desvincular o ultimo (tirando a ponte do // penúltimo pra ele, e alterando o atribto que aponta para ele)
         Node<Double> n = null;
         double info;
         n = dataList.getLast();

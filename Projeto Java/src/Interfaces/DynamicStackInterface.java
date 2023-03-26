@@ -6,4 +6,4 @@ public interface DynamicStackInterface  {
     public double peek();
     public boolean isEmpty();
     public void reset();
-}
+}       
