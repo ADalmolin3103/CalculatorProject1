@@ -70,7 +70,7 @@ public class DynamicStack extends Stack {
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean estaVazia() {
         if (this.getSize() == 0) {
             return true;
         } else
@@ -78,7 +78,7 @@ public class DynamicStack extends Stack {
     }
 
     @Override
-    public void reset() {
+    public void liberar() {
         this.setSize(0);
         dataList.clearList();
     }

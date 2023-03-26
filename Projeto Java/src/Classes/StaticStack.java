@@ -69,14 +69,14 @@ public class StaticStack extends Stack{
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean estaVazia() {
         if(this.size == 0){
             return true;
         } else return false;
     }
 
     @Override
-    public void reset() {
+    public void liberar() {
         this.setSize(0);
     }
 }
