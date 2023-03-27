@@ -19,6 +19,8 @@ public class OperationalMethods implements OperationalMethodsInterface {
             return false;
         } catch (NumberFormatException nfe) {
             return false;
+        }   catch (Exception e){
+            return false;
         }
     }
 

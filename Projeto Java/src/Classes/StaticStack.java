@@ -3,8 +3,8 @@ package Classes;
 public class StaticStack extends Stack{
 
     // Atributo
-    double[] info;
-    int size, limit;
+    private double[] info;
+    private int size, limit;
 
     // Construtor
     public StaticStack(int limit) {

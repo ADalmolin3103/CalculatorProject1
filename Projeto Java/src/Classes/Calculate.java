@@ -1,10 +1,10 @@
 package Classes;
 
 public class Calculate {
-    String expression = "";
-    String[] expressionAr;
-    Stack stack;
-    OperationalMethods om = new OperationalMethods();
+    private String expression = "";
+    private String[] expressionAr;
+    private Stack stack;
+     private OperationalMethods om = new OperationalMethods();
 
     public Calculate(String expression, boolean staticImplementation) {
         
