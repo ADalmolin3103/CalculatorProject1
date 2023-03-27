@@ -1,2 +1,4 @@
 # DataStructsWork1
-Repo do trabalho 1 de Estrutura de dados
+Calculator project. It works with [postfix expressions](https://simple.wikipedia.org/wiki/Postfix_notation)
+
+i.e.: 1 2 + 3 * (Equals to (1+2)*3)
